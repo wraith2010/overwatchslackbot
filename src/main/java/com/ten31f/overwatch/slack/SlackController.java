@@ -22,8 +22,6 @@ public class SlackController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SlackController.class);
 
-	private static final String QUOTE = "\"Don’t ever play yourself.\"\n\t\t--DJ Khaled";
-
 	@RequestMapping(value = "/overwatchme", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Message slack(@RequestParam(value = "token", required = false) String token,
 			@RequestParam(value = "team_id", required = false) String teamID,
@@ -52,9 +50,8 @@ public class SlackController {
 		logger.info("text:\t{}", text);
 		logger.info("response_url:\t{}", responseURL);
 		logger.info("trigger_id:\t{}", triggerID);
-		
 
-		String[] players = text.split(",");
+		String[] players = parse(text);
 
 		Engine engine = new Engine();
 		Team team = engine.pick(players);
@@ -72,7 +69,7 @@ public class SlackController {
 
 		Attachment attachment = new Attachment();
 		attachment.setFallback(team.toString());
-		attachment.setPretext(QUOTE);
+		attachment.setPretext(DJQuote.getRandom().toString());
 
 		List<Field> fields = new ArrayList<>();
 
@@ -95,6 +92,29 @@ public class SlackController {
 
 		return message;
 
+	}
+
+	public static String[] parse(String input) {
+
+		try {
+
+			int playerCount = Integer.parseInt(input);
+
+			String[] players = new String[playerCount];
+
+			for (int index = 0; index < playerCount; index++) {
+
+				players[index] = "Player " + (index + 1);
+
+			}
+
+			return players;
+
+		} catch (NumberFormatException numberFormatException) {
+
+		}
+
+		return input.split(",");
 	}
 
 }
