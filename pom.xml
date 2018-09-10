@@ -23,7 +23,7 @@
 
 	<build>
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -36,9 +36,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<executable>true</executable>
-				</configuration>
 			</plugin>
 
 		</plugins>
@@ -51,12 +48,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/me.ramswaroop.jbot/jbot -->
-		<dependency>
-			<groupId>me.ramswaroop.jbot</groupId>
-			<artifactId>jbot</artifactId>
-			<version>4.1.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
