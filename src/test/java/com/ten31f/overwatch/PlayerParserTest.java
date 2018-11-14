@@ -2,7 +2,7 @@ package com.ten31f.overwatch;
 
 import org.junit.Test;
 
-import com.ten31f.overwatch.slack.SlackController;
+import com.ten31f.overwatch.parser.SlackParser;
 
 public class PlayerParserTest {
 
@@ -11,7 +11,7 @@ public class PlayerParserTest {
 
 		String input = "Ben, Kristen, Dave, Evan, Ron, CA Dave";
 
-		String[] players = SlackController.parse(input);
+		String[] players = SlackParser.parse(input);
 
 		for (int index = 0; index < players.length; index++) {
 			System.out.println(players[index]);
@@ -21,7 +21,7 @@ public class PlayerParserTest {
 	@Test
 	public void numberTest() {
 
-		String[] players = SlackController.parse("6");
+		String[] players = SlackParser.parse("6");
 
 		for (int index = 0; index < players.length; index++) {
 			System.out.println(players[index]);

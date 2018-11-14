@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ten31f.overwatch.engine.Character;
 import com.ten31f.overwatch.engine.Engine;
 import com.ten31f.overwatch.engine.Team;
+import com.ten31f.overwatch.parser.SlackParser;
 
 @RestController
 public class SlackController {
@@ -51,7 +52,7 @@ public class SlackController {
 		logger.info("response_url:\t{}", responseURL);
 		logger.info("trigger_id:\t{}", triggerID);
 
-		String[] players = parse(text);
+		String[] players = SlackParser.parse(text);
 
 		Engine engine = new Engine();
 		Team team = engine.pick(players);
@@ -94,27 +95,6 @@ public class SlackController {
 
 	}
 
-	public static String[] parse(String input) {
 
-		try {
-
-			int playerCount = Integer.parseInt(input);
-
-			String[] players = new String[playerCount];
-
-			for (int index = 0; index < playerCount; index++) {
-
-				players[index] = "Player " + (index + 1);
-
-			}
-
-			return players;
-
-		} catch (NumberFormatException numberFormatException) {
-
-		}
-
-		return input.split(",");
-	}
 
 }
