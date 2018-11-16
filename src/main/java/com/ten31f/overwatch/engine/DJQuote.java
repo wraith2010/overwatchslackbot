@@ -1,4 +1,4 @@
-package com.ten31f.overwatch.slack;
+package com.ten31f.overwatch.engine;
 
 import java.util.Random;
 

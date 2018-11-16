@@ -2,7 +2,7 @@ package com.ten31f.overwatch;
 
 import org.junit.Test;
 
-import com.ten31f.overwatch.slack.DJQuote;
+import com.ten31f.overwatch.engine.DJQuote;
 
 public class QuoteTest {
 

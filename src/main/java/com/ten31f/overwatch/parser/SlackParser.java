@@ -1,17 +1,27 @@
 package com.ten31f.overwatch.parser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.ten31f.overwatch.engine.Character;
+import com.ten31f.overwatch.engine.DJQuote;
 import com.ten31f.overwatch.engine.Team;
-import com.ten31f.overwatch.slack.DJQuote;
 
 public class SlackParser {
 
 	public static String[] parse(String input) {
+
+		if (input == null) {
+			input = "6";
+		}
 
 		try {
 
@@ -33,9 +43,9 @@ public class SlackParser {
 
 		return input.split(",");
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static String buildMessage(Team team) {
+	public static JSONObject buildMessage(Team team) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -49,13 +59,19 @@ public class SlackParser {
 
 		JSONArray fieldsJSONArray = new JSONArray();
 
-		for (Entry<String, Character> entry : team.getCharacterMap().entrySet()) {
+		List<String> keys = new ArrayList<>(team.getCharacterMap().keySet());
+
+		Collections.sort(keys);
+
+		for (String key : keys) {
+
+			Character character = team.getCharacterMap().get(key);
 
 			JSONObject fieldJsonObject = new JSONObject();
-			fieldJsonObject.put("title", fieldJsonObject);
-			fieldJsonObject.put("short", false);
+			fieldJsonObject.put("title", key);
+			fieldJsonObject.put("short", true);
 			fieldJsonObject.put("value",
-					String.format("%s(%s)", entry.getValue().getCharacterName(), entry.getValue().getCharacterClass()));
+					String.format("%s(%s)", character.getCharacterName(), character.getCharacterClass()));
 
 			fieldsJSONArray.add(fieldJsonObject);
 		}
@@ -66,7 +82,24 @@ public class SlackParser {
 
 		jsonObject.put("attachments", attachmentsJSONArray);
 
-		return jsonObject.toJSONString();
+		return jsonObject;
 	}
 
+	
+	public static Map<String,String> slackRequestParser(String requestString){
+		
+		Map<String,String> result = new HashMap<>();
+		
+		List<String> dividedString = Arrays.asList(requestString.split("&"));
+		
+		for(String item: dividedString) {
+			
+			String[] parts = item.split("=");
+			
+			result.put(parts[0], parts[1]);
+		}
+		
+		return result;
+	}
+	
 }

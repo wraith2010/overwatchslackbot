@@ -27,5 +27,15 @@ public class PlayerParserTest {
 			System.out.println(players[index]);
 		}
 	}
+	
+	@Test
+	public void nullTest() {
+
+		String[] players = SlackParser.parse(null);
+
+		for (int index = 0; index < players.length; index++) {
+			System.out.println(players[index]);
+		}
+	}
 
 }

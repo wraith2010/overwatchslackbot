@@ -49,6 +49,8 @@ public class Engine {
 		getCharacters().add(new Character("MERCY", CharacterClass.SUPPORT));
 		getCharacters().add(new Character("MOIRA", CharacterClass.SUPPORT));
 		getCharacters().add(new Character("ZENYATTA", CharacterClass.SUPPORT));
+		
+		getCharacters().add(new Character("ASHE", CharacterClass.DAMAGE));	
 	}
 
 	public Team pick(String[] players) {
