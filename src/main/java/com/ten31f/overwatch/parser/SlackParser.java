@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -17,31 +17,30 @@ import com.ten31f.overwatch.engine.Team;
 
 public class SlackParser {
 
+	private SlackParser() {
+		// hide the constructor this class is static only
+	}
+
 	public static String[] parse(String input) {
 
-		if (input == null) {
+		if (input == null || input.isEmpty() || StringUtils.isBlank(input)) {
 			input = "6";
 		}
 
 		try {
 
 			int playerCount = Integer.parseInt(input);
-
 			String[] players = new String[playerCount];
 
 			for (int index = 0; index < playerCount; index++) {
-
 				players[index] = "Player " + (index + 1);
-
 			}
 
 			return players;
 
 		} catch (NumberFormatException numberFormatException) {
-
+			return input.split(",");
 		}
-
-		return input.split(",");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,21 +84,22 @@ public class SlackParser {
 		return jsonObject;
 	}
 
-	
-	public static Map<String,String> slackRequestParser(String requestString){
-		
-		Map<String,String> result = new HashMap<>();
-		
+	public static Map<String, String> slackRequestParser(String requestString) {
+
+		Map<String, String> result = new HashMap<>();
+
 		List<String> dividedString = Arrays.asList(requestString.split("&"));
-		
-		for(String item: dividedString) {
-			
+
+		for (String item : dividedString) {
+
 			String[] parts = item.split("=");
-			
-			result.put(parts[0], parts[1]);
+
+			if (parts.length == 2) {
+				result.put(parts[0], parts[1]);
+			}
 		}
-		
+
 		return result;
 	}
-	
+
 }

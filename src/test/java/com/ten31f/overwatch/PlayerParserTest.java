@@ -1,11 +1,16 @@
 package com.ten31f.overwatch;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.ten31f.overwatch.parser.SlackParser;
 
 public class PlayerParserTest {
 
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
 	@Test
 	public void listOfNamesTest() {
 
@@ -27,7 +32,7 @@ public class PlayerParserTest {
 			System.out.println(players[index]);
 		}
 	}
-	
+
 	@Test
 	public void nullTest() {
 
@@ -38,4 +43,18 @@ public class PlayerParserTest {
 		}
 	}
 
+	@Test
+	public void blankTest() {
+
+		String[] players = SlackParser.parse(" ");
+
+		for (int index = 0; index < players.length; index++) {
+			System.out.println(players[index]);
+		}
+
+		players = SlackParser.parse("");
+		for (int index = 0; index < players.length; index++) {
+			System.out.println(players[index]);
+		}
+	}
 }

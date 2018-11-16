@@ -26,7 +26,7 @@ public enum DJQuote {
 	@Override
 	public String toString() {
 
-		return String.format("\"%s\"\n\t\t--DJKhaled", getText());
+		return String.format("\"%s\"%n\t\t--DJKhaled", getText());
 	}
 
 	public static DJQuote getRandom() {
